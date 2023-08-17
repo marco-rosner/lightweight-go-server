@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/labstack/echo"
+	"github.com/marco-rosner/lightweight-go-server/dbs"
 	"github.com/marco-rosner/lightweight-go-server/person"
 )
 
@@ -10,11 +11,12 @@ func main() {
 
 	e.GET("/", HelloWorld)
 
-	var db = person.NewInMemDB()
+	db := dbs.NewInMemDB()
+	service := person.PersonService{DB: db}
 
-	e.POST("/pessoas", person.PersonDB{DB: db}.AddPerson)
-	e.GET("/pessoas/:id", person.PersonDB{DB: db}.GetPerson)
-	e.GET("/contagem-pessoas", person.PersonDB{DB: db}.CountPeople)
+	e.POST("/pessoas", service.AddPerson)
+	e.GET("/pessoas/:id", service.GetPerson)
+	e.GET("/contagem-pessoas", service.CountPeople)
 
 	e.Logger.Fatal(e.Start(":8080"))
 }

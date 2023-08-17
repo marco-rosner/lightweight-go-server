@@ -6,7 +6,7 @@ import (
 	"github.com/labstack/echo"
 )
 
-func (pDB PersonDB) GetPerson(c echo.Context) error {
+func (pDB PersonService) GetPerson(c echo.Context) error {
 	p, err := pDB.DB.Get(c.Param("id"))
 
 	if err != nil {

@@ -5,10 +5,11 @@ import (
 	"net/http"
 
 	"github.com/labstack/echo"
+	"github.com/marco-rosner/lightweight-go-server/models"
 )
 
-func (pDB PersonDB) AddPerson(c echo.Context) error {
-	var person Person
+func (pDB PersonService) AddPerson(c echo.Context) error {
+	var person models.Person
 
 	if err := c.Bind(&person); err != nil {
 		c.JSON(http.StatusBadRequest, "ValidationError: "+err.Error())
