@@ -11,10 +11,12 @@ func main() {
 
 	e.GET("/", HelloWorld)
 
-	db := dbs.NewInMemDB()
+	// db := dbs.NewInMemDB()
+	db := dbs.NewMongoDB()
 	service := person.PersonService{DB: db}
 
 	e.POST("/pessoas", service.AddPerson)
+	e.GET("/pessoas", service.SearchPerson)
 	e.GET("/pessoas/:id", service.GetPerson)
 	e.GET("/contagem-pessoas", service.CountPeople)
 
