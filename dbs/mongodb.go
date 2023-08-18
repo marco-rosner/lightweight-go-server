@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"os"
 	"strconv"
 
 	"github.com/marco-rosner/lightweight-go-server/models"
@@ -22,7 +23,7 @@ var ctx = context.Background()
 func NewMongoDB() *MongoDB {
 	var collection *mongo.Collection
 
-	clientOptions := options.Client().ApplyURI("mongodb://localhost:27017/")
+	clientOptions := options.Client().ApplyURI(os.Getenv("MONGODB_URI"))
 	client, err := mongo.Connect(ctx, clientOptions)
 
 	if err != nil {

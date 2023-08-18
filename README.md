@@ -10,7 +10,7 @@ go run .
 
 ## Run with Docker compose
 
-...
+Make sure that you have [docker](https://docs.docker.com/get-docker/) and [docker compose](https://docs.docker.com/compose/install/) installed and run `docker-compose up -d`
 
 ## Run benchmark
 
