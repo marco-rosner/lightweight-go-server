@@ -23,7 +23,9 @@ func (pDB PersonService) AddPerson(c echo.Context) error {
 
 	// people = append(people, person)
 
-	pDB.DB.Create(&person)
+	if err := pDB.DB.Create(&person); err != nil {
+		return c.JSON(http.StatusInternalServerError, string(err.Error()))
+	}
 
 	return c.JSON(http.StatusCreated, string(jsonPerson))
 }
