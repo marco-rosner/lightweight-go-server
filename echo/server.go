@@ -2,15 +2,12 @@ package main
 
 import (
 	"github.com/labstack/echo"
-	"github.com/marco-rosner/lightweight-go-server/echo/person"
-
 	"github.com/marco-rosner/lightweight-go-server/dbs"
+	"github.com/marco-rosner/lightweight-go-server/echo/person"
 )
 
 func main() {
 	e := echo.New()
-
-	e.GET("/", HelloWorld)
 
 	// db := dbs.NewInMemDB()
 	// db := dbs.NewMongoDB()
