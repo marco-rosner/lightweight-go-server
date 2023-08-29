@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
+	"os"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -30,7 +31,7 @@ var loadData = []*models.Person{
 }
 
 func NewPostgresDB() *postgresDB {
-	uri := "postgres://postgres:1234@localhost/lightweight-go-server?sslmode=disable"
+	uri := os.Getenv("POSTGRES_URI")
 	conn, err := sql.Open("postgres", uri)
 	if err != nil {
 		panic(err)

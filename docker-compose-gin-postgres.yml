@@ -1,0 +1,29 @@
+version: '3.5'
+
+services:
+  ginserver-postgres:
+    build: 
+      context: ./
+      dockerfile: "gin-postgres.dockerfile"
+    hostname: ginserver
+    environment:
+      - POSTGRES_URI=postgres://postgres:1234@postgresdb:5432/?sslmode=disable
+    depends_on:
+      - postgresdb
+    ports:
+      - 8080:8080
+  
+  postgresdb:
+    image: postgres
+    volumes:
+      - ./data/database:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: lightweight-go-server
+    ports:
+      - 5432:5432
+
+networks:
+  node-network:
+    driver: bridge
