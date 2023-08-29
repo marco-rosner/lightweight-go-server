@@ -1,6 +1,8 @@
 package main
 
 import (
+	"os"
+
 	"github.com/gin-gonic/gin"
 
 	"github.com/marco-rosner/lightweight-go-server/dbs"
@@ -10,9 +12,19 @@ import (
 func main() {
 	server := gin.Default()
 
-	// db := dbs.NewInMemDB()
-	// db := dbs.NewMongoDB()
-	db := dbs.NewPostgresDB()
+	var db dbs.DB
+
+	switch os.Getenv("DB") {
+	case "mongo":
+		println("Setting mongoDB")
+		db = dbs.NewMongoDB()
+	case "postgres":
+		println("Setting PostgresDB")
+		db = dbs.NewPostgresDB()
+	default:
+		println("Setting InMemoryDB")
+		db = dbs.NewInMemDB()
+	}
 
 	service := person.PersonService{DB: db}
 
@@ -21,5 +33,5 @@ func main() {
 	server.GET("/pessoas/:id", service.GetPerson)
 	server.GET("/contagem-pessoas", service.CountPeople)
 
-	server.Run("localhost:8080")
+	server.Run("0.0.0.0:8080")
 }

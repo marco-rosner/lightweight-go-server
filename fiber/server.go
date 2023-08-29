@@ -1,6 +1,8 @@
 package main
 
 import (
+	"os"
+
 	"github.com/gofiber/fiber/v2"
 
 	"github.com/marco-rosner/lightweight-go-server/dbs"
@@ -10,9 +12,16 @@ import (
 func main() {
 	f := fiber.New()
 
-	// db := dbs.NewInMemDB()
-	// db := dbs.NewMongoDB()
-	db := dbs.NewPostgresDB()
+	var db dbs.DB
+
+	switch os.Getenv("DB") {
+	case "mongo":
+		db = dbs.NewMongoDB()
+	case "postgres":
+		db = dbs.NewPostgresDB()
+	default:
+		db = dbs.NewInMemDB()
+	}
 
 	service := person.PersonService{DB: db}
 

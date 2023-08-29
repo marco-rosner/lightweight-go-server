@@ -1,6 +1,8 @@
 package main
 
 import (
+	"os"
+
 	"github.com/labstack/echo"
 	"github.com/marco-rosner/lightweight-go-server/dbs"
 	"github.com/marco-rosner/lightweight-go-server/echo/person"
@@ -9,9 +11,16 @@ import (
 func main() {
 	e := echo.New()
 
-	// db := dbs.NewInMemDB()
-	// db := dbs.NewMongoDB()
-	db := dbs.NewPostgresDB()
+	var db dbs.DB
+
+	switch os.Getenv("DB") {
+	case "mongo":
+		db = dbs.NewMongoDB()
+	case "postgres":
+		db = dbs.NewPostgresDB()
+	default:
+		db = dbs.NewInMemDB()
+	}
 
 	service := person.PersonService{DB: db}
 
