@@ -1,11 +1,11 @@
 version: '3.5'
 
 services:
-  goserver:
+  ginserver:
     build: 
       context: ./
-      dockerfile: "echo-mongo.dockerfile"
-    hostname: goserver
+      dockerfile: "gin-mongo.dockerfile"
+    hostname: ginserver
     environment:
       - MONGODB_URI=mongodb://root:rootpassword@mongodb:27017
     depends_on:

@@ -1,11 +1,11 @@
 version: '3.5'
 
 services:
-  goserver:
+  fiberserver:
     build: 
       context: ./
-      dockerfile: "echo-mongo.dockerfile"
-    hostname: goserver
+      dockerfile: "fiber-mongo.dockerfile"
+    hostname: fiberserver
     environment:
       - MONGODB_URI=mongodb://root:rootpassword@mongodb:27017
     depends_on:

@@ -9,7 +9,7 @@ import (
 )
 
 func (pDB PersonService) SearchPerson(c *gin.Context) {
-	term := c.Param("t")
+	term := c.Query("t")
 
 	if term == "" {
 		c.Error(errors.New("Error: "))
