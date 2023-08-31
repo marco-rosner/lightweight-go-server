@@ -4,13 +4,19 @@ A performance comparison to find the lightweight Go server using Echo, Gin and F
 
 ## Run server
 
-```go
-go run .
+You should go to the server folder that you would like to use, set the env var for the choosen database and run the server. Like:
+
+```sh
+cd echo && DB="mongo" MONGODB_URI="..." go run .
 ```
 
 ## Run with Docker compose
 
-Make sure that you have [docker](https://docs.docker.com/get-docker/) and [docker compose](https://docs.docker.com/compose/install/) installed and run `docker-compose up -d`
+Make sure that you have [docker](https://docs.docker.com/get-docker/) and [docker compose](https://docs.docker.com/compose/install/) installed. Next, you should choose which server and database you would like to run (e.g. docker-compose-<server>-<database>.yml) and run the command like this:
+
+```sh
+docker-compose -f docker-compose-echo-postgres.yml up --remove-orphans
+```
 
 ## Run benchmark
 
