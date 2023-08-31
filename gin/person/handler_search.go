@@ -1,7 +1,6 @@
 package person
 
 import (
-	"errors"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -12,7 +11,8 @@ func (pDB PersonService) SearchPerson(c *gin.Context) {
 	term := c.Query("t")
 
 	if term == "" {
-		c.Error(errors.New("Error: "))
+		c.JSON(http.StatusBadRequest, "bad request")
+		return
 	}
 
 	p, err := pDB.DB.Search(term)
