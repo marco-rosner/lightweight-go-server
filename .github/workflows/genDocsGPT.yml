@@ -26,8 +26,8 @@ jobs:
       
       - name: Install and run genDocsGPT
         run: |
-          python3 -m pip install genDocsGPT
-          python3 -m genDocsGPT -v -m ./models -a ./gin -t ${{ secrets.ChatGPT_API_KEY}}
+          python3 -m pip install --upgrade genDocsGPT
+          python3 -m genDocsGPT -v -m ./models -a ./gin -o api.md -t ${{ secrets.ChatGPT_API_KEY}} --gpt_model gpt-3.5-turbo
 
       - name: Create pull request with docs generated
         env:
