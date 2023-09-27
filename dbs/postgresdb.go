@@ -4,7 +4,6 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
-	"os"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -17,13 +16,6 @@ type postgresDB struct {
 	conn *gorm.DB
 }
 
-type people struct {
-	id       string
-	name     string
-	nickname string
-	birth    string
-}
-
 var loadData = []*models.Person{
 	{ID: "1", Name: "Marco Rosner", Nickname: "Rosner", Birth: "2000-10-01"},
 	{ID: "2", Name: "João Rosner", Nickname: "João", Birth: "2000-10-02"},
@@ -31,7 +23,8 @@ var loadData = []*models.Person{
 }
 
 func NewPostgresDB() *postgresDB {
-	uri := os.Getenv("POSTGRES_URI")
+	// uri := os.Getenv("POSTGRES_URI")
+	uri := "postgres://postgres:1234@localhost/lightweight-go-server?sslmode=disable"
 	conn, err := sql.Open("postgres", uri)
 	if err != nil {
 		panic(err)
@@ -51,6 +44,19 @@ func NewPostgresDB() *postgresDB {
 
 	db.Migrator().DropTable(&models.Person{})   // drop any previous data stored
 	db.Migrator().CreateTable(&models.Person{}) // create people table
+	// create indexes
+	// For id field
+	db.Migrator().CreateIndex(&models.Person{}, "ID")
+	db.Migrator().CreateIndex(&models.Person{}, "idx_id")
+	// For Name field
+	db.Migrator().CreateIndex(&models.Person{}, "Name")
+	db.Migrator().CreateIndex(&models.Person{}, "idx_name")
+	// For Nickname field
+	db.Migrator().CreateIndex(&models.Person{}, "Nickname")
+	db.Migrator().CreateIndex(&models.Person{}, "idx_nickname")
+	// For full text search on name and nickname
+	db.Exec("CREATE INDEX idx_name_ftext ON people USING GIN (to_tsvector('portuguese', name))")
+	db.Exec("CREATE INDEX idx_nickname_ftext ON people USING GIN (to_tsvector('portuguese', nickname))")
 
 	resLoad := db.Create(loadData)
 	if resLoad.Error != nil {
