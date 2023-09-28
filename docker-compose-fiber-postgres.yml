@@ -1,6 +1,17 @@
 version: '3.5'
 
 services:
+  postgresdb:
+    image: postgres
+    volumes:
+      - ./data/database:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: lightweight-go-server
+    ports:
+      - 5432:5432
+
   fiberserver-postgres:
     build: 
       context: ./
@@ -12,14 +23,3 @@ services:
       - postgresdb
     ports:
       - 8080:8080
-  
-  postgresdb:
-    image: postgres
-    volumes:
-      - ./data/database:/var/lib/postgresql/data
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 1234
-      POSTGRES_DB: lightweight-go-server
-    ports:
-      - 5432:5432
