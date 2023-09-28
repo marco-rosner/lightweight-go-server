@@ -12,22 +12,23 @@
 
 ## Models
 ### Person
-| Field      | Type      | Description                                |
-|------------|-----------|--------------------------------------------|
-| ID         | string    | Unique identifier for the person            |
-| Name       | string    | Name of the person                          |
-| Nickname   | string    | Nickname of the person                      |
-| Birth      | string    | Date of birth of the person (required)      |
-| CreatedAt  | time.Time | Timestamp of when the person was created    |
-| UpdateAt   | time.Time | Timestamp of when the person was last updated |
+```json
+{
+  "id": "string",
+  "name": "string",
+  "nickname": "string",
+  "birth": "string",
+  "createdAt": "string",
+  "updateAt": "string"
+}
+```
 
 ## Endpoints
 
 ### Add Person
-- Method: POST
-- URL: /pessoas
-
-**Request Body:**
+- **URL:** `/pessoas`
+- **Method:** `POST`
+- **Request Body:**
 ```json
 {
   "id": "string",
@@ -36,11 +37,21 @@
   "birth": "string"
 }
 ```
-
-**Example:**
+- **Response:**
+```json
+{
+  "id": "string",
+  "name": "string",
+  "nickname": "string",
+  "birth": "string",
+  "createdAt": "string",
+  "updateAt": "string"
+}
+```
+- **Example:**
 ```bash
 curl -X POST -H "Content-Type: application/json" -d '{
-  "id": "123",
+  "id": "1",
   "name": "John Doe",
   "nickname": "johnd",
   "birth": "1990-01-01"
@@ -48,34 +59,59 @@ curl -X POST -H "Content-Type: application/json" -d '{
 ```
 
 ### Search Person
-- Method: GET
-- URL: /pessoas
-
-**Query Parameters:**
-- t: Search term (required)
-
-**Example:**
+- **URL:** `/pessoas`
+- **Method:** `GET`
+- **Query Parameters:**
+  - `t` (required): search term
+- **Response:**
+```json
+[
+  {
+    "id": "string",
+    "name": "string",
+    "nickname": "string",
+    "birth": "string",
+    "createdAt": "string",
+    "updateAt": "string"
+  }
+]
+```
+- **Example:**
 ```bash
 curl -X GET 'http://localhost:8080/pessoas?t=john'
 ```
 
 ### Get Person
-- Method: GET
-- URL: /pessoas/:id
-
-**URL Parameters:**
-- id: Person ID (required)
-
-**Example:**
+- **URL:** `/pessoas/:id`
+- **Method:** `GET`
+- **Path Parameters:**
+  - `id` (required): person ID
+- **Response:**
+```json
+{
+  "id": "string",
+  "name": "string",
+  "nickname": "string",
+  "birth": "string",
+  "createdAt": "string",
+  "updateAt": "string"
+}
+```
+- **Example:**
 ```bash
-curl -X GET 'http://localhost:8080/pessoas/123'
+curl -X GET 'http://localhost:8080/pessoas/1'
 ```
 
 ### Count People
-- Method: GET
-- URL: /contagem-pessoas
-
-**Example:**
+- **URL:** `/contagem-pessoas`
+- **Method:** `GET`
+- **Response:**
+```json
+{
+  "count": 10
+}
+```
+- **Example:**
 ```bash
 curl -X GET 'http://localhost:8080/contagem-pessoas'
 ```
