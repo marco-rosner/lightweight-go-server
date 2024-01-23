@@ -13,9 +13,9 @@ class BenchmarkSimulation extends Simulation {
     .userAgentHeader("Marco Rosner")
 
   val creatingPeople = scenario("Creating people")
-    .feed(tsv("pessoas-payloads.tsv").circular())
+    .feed(tsv("people-payloads.tsv").circular())
     .exec(
-      http("Create people")
+      http("create")
       .post("/pessoas").body(StringBody("#{payload}"))
       .header("content-type", "application/json")
       .check(status.in(201))
@@ -24,7 +24,7 @@ class BenchmarkSimulation extends Simulation {
   val searchPeople = scenario("Search people")
     .feed(tsv("termos-busca.tsv").circular())
     .exec(
-      http("Search people")
+      http("Search People")
       .get("/pessoas?t=#{t}")
     )
 
