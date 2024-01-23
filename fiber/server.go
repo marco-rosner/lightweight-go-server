@@ -16,10 +16,13 @@ func main() {
 
 	switch os.Getenv("DB") {
 	case "mongo":
+		println("Setting mongoDB")
 		db = dbs.NewMongoDB()
 	case "postgres":
+		println("Setting PostgresDB")
 		db = dbs.NewPostgresDB()
 	default:
+		println("Setting InMemoryDB")
 		db = dbs.NewInMemDB()
 	}
 
